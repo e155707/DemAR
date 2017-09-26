@@ -1,7 +1,7 @@
 # DemAR
 ## <remote> “<DemAR>”
 
-* Elevator Pitch: 
+* Elevator Pitch:
 出前の満足感を増やしたい,
 20代男性の出前を取る人向けの
 出前の見た目の合意形成を実現する
