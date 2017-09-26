@@ -1,5 +1,5 @@
 # DemAR
-## <remote> “<DemAR>”
+## remote “DemAR”
 
 * Elevator Pitch:
 出前の満足感を増やしたい,
