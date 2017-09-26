@@ -10,7 +10,8 @@
 写真や文字と違って,
 直感的により鮮明にイメージできる.
 
-* Product Backlog: backlog URL
+* Product Backlog:
+https://trello.com/b/oFYGCTwk/スプリントバックログ
 
 
 * Members: github account name (real name), ...,
