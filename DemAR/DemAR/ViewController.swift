@@ -14,6 +14,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
+    var planes:[Plane] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,8 +25,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
+        // デバッグ時用オプション
+        // ARKitが感知しているところに「+」がいっぱい出てくるようになる
+        sceneView.debugOptions = ARSCNDebugOptions.showFeaturePoints
+        
+        
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        //let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        
+        let scene = SCNScene()
         
         // Set the scene to the view
         sceneView.scene = scene
@@ -36,6 +45,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
 
+        // ARKit用。平面を検知するように指定
+        configuration.planeDetection = .horizontal
+        // 現実の環境光に合わせてレンダリングしてくれるらしい
+        //configuration.isLightEstimationEnabled = true
+        
         // Run the view's session
         sceneView.session.run(configuration)
     }
@@ -76,5 +90,38 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
+        
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
+        
+        // 平面を生成
+        let plane = Plane(anchor: planeAnchor)
+        
+        // ノードを追加
+        node.addChildNode(plane)
+        
+        // 管理用配列に追加
+        planes.append(plane)
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        // updateされた平面ノードと同じidのものの情報をアップデート
+        for plane in planes {
+            if plane.anchor.identifier == anchor.identifier,
+                let planeAnchor = anchor as? ARPlaneAnchor {
+                plane.update(anchor: planeAnchor)
+            }
+        }
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
+        // updateされた平面ノードと同じidのものの情報を削除
+        for (index, plane) in planes.enumerated().reversed() {
+            if plane.anchor.identifier == anchor.identifier {
+                planes.remove(at: index)
+            }
+        }
     }
 }
