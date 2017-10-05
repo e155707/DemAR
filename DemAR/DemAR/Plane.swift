@@ -41,18 +41,7 @@ class Plane: SCNNode {
         material.diffuse.contents = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.8)
         planeNode.geometry?.firstMaterial = material
         
-        // 箱を生成
-        let cube = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
-        let cubeNode = SCNNode(geometry: cube)
-        
-        // 箱の判定を追加
-        let cubeShape = SCNPhysicsShape(geometry: cube, options: nil)
-        cubeNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: cubeShape)
-        
-        // sceneView上のタップ座標のどこに箱を出現させるかを指定
-        cubeNode.position = SCNVector3Make(initAnchor.center.x, 0.05, initAnchor.center.z)
-        
-        addChildNode(cubeNode)
+
         addChildNode(planeNode)
     }
     
