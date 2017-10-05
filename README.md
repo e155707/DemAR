@@ -25,3 +25,7 @@ https://trello.com/b/oFYGCTwk/スプリントバックログ
 
 * Business Hours: *不明
 * notes:
+
+# 3D model
+- 「model/decoration/*」
+    - butterfly/* : model by [Tan](https://sketchfab.com/Tan) – [Butterfly](https://sketchfab.com/models/35426d17345e4fd3b0532ed0fee951fa)
