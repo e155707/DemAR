@@ -37,6 +37,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the scene to the view
         sceneView.scene = scene
+        
+ 
+        // 蝶々をNodeに落とし込む.
+        let deco_Scene = SCNScene(named: "art.scnassets/butterfly.scn")!
+        let deco_Node = deco_Scene.rootNode.childNode(withName: "butterfly", recursively: true)
+        
+        // 手動で蝶々のサイズを変更
+        deco_Node?.scale = SCNVector3(0.001, 0.001, 0.001)
+        // 位置 カメラを原点として左右0 下に1m 奥に2mに設定
+        deco_Node?.position = SCNVector3(0, -1, -2)
+        // 蝶々を出現させる.
+        sceneView.scene.rootNode.addChildNode(deco_Node!)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,16 +79,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Release any cached data, images, etc that aren't in use.
     }
 
-    // MARK: - ARSCNViewDelegate
-    
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
-    }
-*/
+
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
@@ -124,4 +128,5 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
         }
     }
+
 }
