@@ -13,6 +13,7 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    //@IBOutlet var sceneView: ARSKView!
     
     var planes:[Plane] = []
     
@@ -40,7 +41,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
  
         // 蝶々をNodeに落とし込む.
-        let deco_Scene = SCNScene(named: "art.scnassets/butterfly.scn")!
+        let deco_Scene = SCNScene(named: "art.scnassets/model/decoration/butterfly/butterfly.scn")!
         let deco_Node = deco_Scene.rootNode.childNode(withName: "butterfly", recursively: true)
         
         // 手動で蝶々のサイズを変更
