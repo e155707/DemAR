@@ -28,4 +28,4 @@ https://trello.com/b/oFYGCTwk/スプリントバックログ
 
 # 3D model
 - 「DemAR/DemAR/model/decoration/*」
-    - butterfly/* : model by [Tan](https://sketchfab.com/Tan) – [Butterfly](https://sketchfab.com/models/35426d17345e4fd3b0532ed0fee951fa)
+    - butterfly/* : model by [Tan](https://sketchfab.com/Tan) – [Butterfly](https://sketchfab.com/models/35426d17345e4fd3b0532ed0fee951fa) obj to scn
