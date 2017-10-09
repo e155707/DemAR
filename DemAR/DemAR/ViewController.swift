@@ -41,6 +41,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene = scene
         
         appDelegate.Object = 0
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,24 +91,33 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
     
+    /** Object
+     *  アイコンリスト(食べ物や, 飾りを選べるテーブル)のボタン遷移先.
+     */
     func Object(){
+        // 蝶々モデルの読み込み
         let deco_Scene = SCNScene(named: "art.scnassets/model/decoration/butterfly/butterfly.scn")!
         let deco_Node = deco_Scene.rootNode.childNode(withName: "butterfly", recursively: true)
-        deco_Node?.scale = SCNVector3(0.001, 0.001, 0.001)
-        deco_Node?.position = SCNVector3(0, -1, -2)
-        //node.addChildNode(deco_Node!)
-        sceneView.scene.rootNode.addChildNode(deco_Node!)
+        
+        // 蝶々の大きさや, 出現先の変更
+        deco_Node?.scale = SCNVector3(0.0001, 0.0001, 0.0001)
+        deco_Node?.position = SCNVector3(0, 0, -0.1)
+    
+        // 蝶々を出現
+        //sceneView.scene.addChildNode(deco_Node!)
+        // 蝶々を出現させ中央に固定する. (カメラに付随させる.)
+        sceneView.pointOfView?.addChildNode(deco_Node!)
+        
     }
 
-    
-    
+    /** renderer(didAdd)
+     *  平面検知が成功した場合に呼び出されるメソッド.
+     */
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         
         // 平面を生成
         let plane = Plane(anchor: planeAnchor)
-        
-
         
         // cakeをNodeに落とし込む.
         let food_Scene = SCNScene(named: "art.scnassets/model/food/cake/chococake.scn")!
@@ -134,7 +144,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
         }
     }
-    
+
     func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
         // updateされた平面ノードと同じidのものの情報を削除
         for (index, plane) in planes.enumerated().reversed() {
@@ -143,5 +153,4 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
         }
     }
-
 }
