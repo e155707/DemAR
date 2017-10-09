@@ -16,6 +16,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var planes:[Plane] = []
+
+    let decosName = "decos"
+    let foodsName = "foods"
     
     // リストから選ばれたモデルを一時保存する関数
     var selectDecoNode:SCNNode? = nil
@@ -48,9 +51,39 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // タップされた場合, どの関数を呼ぶのかをactionで指定
         let tapGestureRecognizer = UITapGestureRecognizer(target: self,
                                                           action: #selector(tapGesture(gestureRecognizer:)))
+
+        
+        
         // sceneView(ARSCNView)に適用
         sceneView.addGestureRecognizer(tapGestureRecognizer)
+        
+        
+        // test スワイプしたら全オブジェクト削除
 
+        let directionList:[UISwipeGestureRecognizerDirection] = [.up, .down, .right, .left]
+        
+        for direction in directionList {
+            //4方向のスワイプリコグナイザーをラベルに登録する。
+            let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(gestureRecognizer:)))
+            swipeRecognizer.direction = direction
+            
+            sceneView.addGestureRecognizer(swipeRecognizer)
+        }
+        node_init()
+
+    }
+    
+    
+    // それぞれのnodeで管理するので, その初期設定を行う関数.
+    func node_init(){
+        // 飾りの管理用node
+        let decos:SCNNode = SCNNode()
+        // 食べ物の管理用node
+        let foods:SCNNode = SCNNode()
+        decos.name = "decos"
+        foods.name = "foods"
+        sceneView.scene.rootNode.addChildNode(decos)
+        sceneView.scene.rootNode.addChildNode(foods)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -138,6 +171,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         food_Node?.position = SCNVector3(planeAnchor.center.x, 0, planeAnchor.center.z)
         // ケーキを出現させる.
         node.addChildNode(food_Node!)
+        // 管理用配列に追加
+        node.childNode(withName: foodsName, recursively: false)?.addChildNode(food_Node!)
     
         // ノードを追加
         node.addChildNode(plane)
@@ -171,11 +206,27 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if let copyNode = selectDecoNode?.clone() {
             // selectDecoNodeに物体が入っている場合, 表示されている位置に追加.
             copyNode.position = (selectDecoNode?.worldPosition)!
-            sceneView.scene.rootNode.addChildNode(copyNode)
+            
+            // 管理用配列に追加
+            sceneView.scene.rootNode.childNode(withName: decosName, recursively: false)?.addChildNode(copyNode)
         }
         else{
             return
         }
-        
+    }
+    
+    // スワイプした時に呼び出されるメソッド
+    @objc func didSwipe(gestureRecognizer: UISwipeGestureRecognizer){
+        // 管理用node含め, その子ノードを全部削除.
+        reset()
+
+    }
+    
+    // 管理用node含め, その子ノードを全部削除する関数
+    func reset(){
+        sceneView.scene.rootNode.childNode(withName: decosName, recursively: false)?.runAction(SCNAction.removeFromParentNode())
+        sceneView.scene.rootNode.childNode(withName: foodsName, recursively: false)?.runAction(SCNAction.removeFromParentNode())
+        // また, 管理用の新しいノードを作る.
+        node_init()
     }
 }
