@@ -2,8 +2,8 @@
 //  DemARUITests.swift
 //  DemARUITests
 //
-//  Created by 赤堀　貴一 on 2017/09/26.
-//  Copyright © 2017年 Ryukyu. All rights reserved.
+//  Created by e155707 on 2017/10/09.
+//  Copyright © 2017年 e155707. All rights reserved.
 //
 
 import XCTest
