@@ -104,6 +104,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // 平面を生成
         let plane = Plane(anchor: planeAnchor)
         
+        // cakeをNodeに落とし込む.
+        let food_Scene = SCNScene(named: "art.scnassets/model/food/cake/chococake.scn")!
+        let food_Node = food_Scene.rootNode.childNode(withName: "chococake", recursively: true)
+        
+        // 平面検知した場所にケーキを置く
+        food_Node?.position = SCNVector3(planeAnchor.center.x, 0, planeAnchor.center.z)
+        // ケーキを出現させる.
+        node.addChildNode(food_Node!)
+    
         // ノードを追加
         node.addChildNode(plane)
         

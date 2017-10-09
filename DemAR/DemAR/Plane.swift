@@ -38,7 +38,8 @@ class Plane: SCNNode {
         
         // 写した時に位置がわかるようにうっすら黒い色を指定
         let material = SCNMaterial()
-        material.diffuse.contents = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.8)
+        // 地面を透明にさせる.
+        material.diffuse.contents = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
         planeNode.geometry?.firstMaterial = material
         
 
