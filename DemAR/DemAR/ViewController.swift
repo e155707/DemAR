@@ -17,6 +17,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     var planes:[Plane] = []
     
+    // リストから選ばれたモデルを一時保存する関数
+    var selectDecoNode:SCNNode? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,6 +44,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene = scene
         
         appDelegate.Object = 0
+        
+        // タップされた場合, どの関数を呼ぶのかをactionで指定
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                          action: #selector(tapGesture(gestureRecognizer:)))
+        // sceneView(ARSCNView)に適用
+        sceneView.addGestureRecognizer(tapGestureRecognizer)
 
     }
     
@@ -108,6 +117,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // 蝶々を出現させ中央に固定する. (カメラに付随させる.)
         sceneView.pointOfView?.addChildNode(deco_Node!)
         
+        // 蝶々のモデルを引き渡し.
+        selectDecoNode = deco_Node
     }
 
     /** renderer(didAdd)
@@ -152,5 +163,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 planes.remove(at: index)
             }
         }
+    }
+    
+    // タップした際に呼び出される関数.
+    @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer){
+        // もし, selectDecoNodeに何も入っていなければ, 何もしない.
+        if let copyNode = selectDecoNode?.clone() {
+            // selectDecoNodeに物体が入っている場合, 表示されている位置に追加.
+            copyNode.position = (selectDecoNode?.worldPosition)!
+            sceneView.scene.rootNode.addChildNode(copyNode)
+        }
+        else{
+            return
+        }
+        
     }
 }
