@@ -13,13 +13,14 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
-    //@IBOutlet var sceneView: ARSKView!
+    var appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var planes:[Plane] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        appDelegate.viewController = self
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -39,18 +40,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Set the scene to the view
         sceneView.scene = scene
         
- 
-        // 蝶々をNodeに落とし込む.
-        let deco_Scene = SCNScene(named: "art.scnassets/model/decoration/butterfly/butterfly.scn")!
-        let deco_Node = deco_Scene.rootNode.childNode(withName: "butterfly", recursively: true)
-        
-        // 手動で蝶々のサイズを変更
-        deco_Node?.scale = SCNVector3(0.001, 0.001, 0.001)
-        // 位置 カメラを原点として左右0 下に1m 奥に2mに設定
-        deco_Node?.position = SCNVector3(0, -1, -2)
-        // 蝶々を出現させる.
-        sceneView.scene.rootNode.addChildNode(deco_Node!)
-
+        appDelegate.Object = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +56,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Run the view's session
         sceneView.session.run(configuration)
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -98,11 +90,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
     
+    func Object(){
+        let deco_Scene = SCNScene(named: "art.scnassets/model/decoration/butterfly/butterfly.scn")!
+        let deco_Node = deco_Scene.rootNode.childNode(withName: "butterfly", recursively: true)
+        deco_Node?.scale = SCNVector3(0.001, 0.001, 0.001)
+        deco_Node?.position = SCNVector3(0, -1, -2)
+        //node.addChildNode(deco_Node!)
+        sceneView.scene.rootNode.addChildNode(deco_Node!)
+    }
+
+    
+    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         
         // 平面を生成
         let plane = Plane(anchor: planeAnchor)
+        
+
         
         // cakeをNodeに落とし込む.
         let food_Scene = SCNScene(named: "art.scnassets/model/food/cake/chococake.scn")!

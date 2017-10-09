@@ -53,7 +53,6 @@ class Plane: SCNNode {
     // 平面情報がアップデートされた時に呼ぶ
     func update(anchor: ARPlaneAnchor) {
         // 改めて諸々設定
-        
         planeGeometry.width = CGFloat(anchor.extent.x)
         planeGeometry.length = CGFloat(anchor.extent.z)
         position = SCNVector3Make(anchor.center.x, 0, anchor.center.z)
