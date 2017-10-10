@@ -38,21 +38,11 @@ class Plane: SCNNode {
         
         // 写した時に位置がわかるようにうっすら黒い色を指定
         let material = SCNMaterial()
-        material.diffuse.contents = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.8)
+        // 地面を透明にさせる.
+        material.diffuse.contents = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
         planeNode.geometry?.firstMaterial = material
         
-        // 箱を生成
-        let cube = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
-        let cubeNode = SCNNode(geometry: cube)
-        
-        // 箱の判定を追加
-        let cubeShape = SCNPhysicsShape(geometry: cube, options: nil)
-        cubeNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: cubeShape)
-        
-        // sceneView上のタップ座標のどこに箱を出現させるかを指定
-        cubeNode.position = SCNVector3Make(initAnchor.center.x, 0.05, initAnchor.center.z)
-        
-        addChildNode(cubeNode)
+
         addChildNode(planeNode)
     }
     
@@ -63,7 +53,6 @@ class Plane: SCNNode {
     // 平面情報がアップデートされた時に呼ぶ
     func update(anchor: ARPlaneAnchor) {
         // 改めて諸々設定
-        
         planeGeometry.width = CGFloat(anchor.extent.x)
         planeGeometry.length = CGFloat(anchor.extent.z)
         position = SCNVector3Make(anchor.center.x, 0, anchor.center.z)
