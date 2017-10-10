@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var Object: Int!
+    var Food:Int! = 0
     var viewController: ViewController!
 
 

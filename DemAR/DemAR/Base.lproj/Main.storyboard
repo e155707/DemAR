@@ -82,6 +82,24 @@
                                     <action selector="AddObject:" destination="OGj-cd-N6a" eventType="touchUpInside" id="EpI-5e-R9O"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mZa-FD-zCR">
+                                <rect key="frame" x="125" y="0.0" width="125" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="戻る"/>
+                                <connections>
+                                    <action selector="Back:" destination="OGj-cd-N6a" eventType="touchUpInside" id="QiO-GT-R8u"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oMJ-dN-4T4">
+                                <rect key="frame" x="250" y="0.0" width="125" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="ケーキ"/>
+                                <connections>
+                                    <action selector="AddFood:" destination="OGj-cd-N6a" eventType="touchUpInside" id="mfT-Js-6SW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="UJy-SX-Kg9"/>
